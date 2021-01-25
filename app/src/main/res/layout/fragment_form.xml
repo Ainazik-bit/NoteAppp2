@@ -6,7 +6,7 @@
     tools:context=".FormFragment"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#95C5CC"
+    android:background="@drawable/listback"
     >
  <EditText
      android:id="@+id/edit_text"

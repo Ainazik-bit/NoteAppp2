@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.example.noteappp.Models.Note;
 import com.google.android.material.behavior.SwipeDismissBehavior;
 
 public class FormFragment extends Fragment {
@@ -39,14 +40,9 @@ public class FormFragment extends Fragment {
 
     private void save() {
         String text = editText.getText().toString().trim();
+        Note note = new Note(text);
         Bundle bundle = new Bundle();
-        bundle.putString("text", text);
+        bundle.putSerializable("note", note);
         getParentFragmentManager().setFragmentResult("rk_form", bundle);
-        close();
-    }
-
-    private void close() {
-        NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment);
-        navController.navigate(R.id.formFragment);
-    }
-}
+        ((MainActivity) requireActivity()).closeFragment();
+    }}

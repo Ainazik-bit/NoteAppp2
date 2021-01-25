@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Board.BoardFragment"
+    android:background="#FFFFFF"
+    >
+
+<androidx.viewpager2.widget.ViewPager2
+    android:id="@+id/ViewPager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+    <Button
+        android:layout_marginTop="30dp"
+        android:id="@+id/btnSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Пропустить"
+        android:layout_gravity="right"
+        android:backgroundTint="#16C3D1"
+        />
+
+</FrameLayout>
