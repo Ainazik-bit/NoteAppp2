@@ -22,4 +22,6 @@ public class Prefs {
     public void clearSets(){
         preferences.edit().clear().apply();
     }
+
+
 }

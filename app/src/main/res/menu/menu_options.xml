@@ -5,5 +5,9 @@
         android:id="@+id/clear"
         android:title="Отчистить"
         />
+    <item
+        android:id="@+id/Sort"
+        android:title="Сортировать"
+        />
 
 </menu>

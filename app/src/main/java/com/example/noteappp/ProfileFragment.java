@@ -17,7 +17,6 @@ import android.widget.ImageView;
 
 public class ProfileFragment extends Fragment {
     private ImageView imageView;
-
     private ActivityResultLauncher<String> mGetContent;
 
     @Override
@@ -35,12 +34,20 @@ public class ProfileFragment extends Fragment {
 
     private void init(View view) {
         imageView=view.findViewById(R.id.imageView);
-        imageView.setOnClickListener(v -> galleryOpenner());
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileFragment.this.galleryOpenner();
+            }
+        });
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                uri -> {
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri uri) {
 
-                    imageView.setImageURI(uri);
+                        imageView.setImageURI(uri);
+                    }
                 });
     }
 

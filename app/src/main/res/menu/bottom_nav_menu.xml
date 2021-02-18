@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/fragment_profile"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_baseline_add_24"
         android:title="Profile"
         />
 

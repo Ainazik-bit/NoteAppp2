@@ -1,17 +1,15 @@
 package com.example.noteappp.ui.Board;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.noteappp.MainActivity;
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.noteappp.Models.BoardRabbit;
 import com.example.noteappp.OnItemClickListener;
 import com.example.noteappp.R;
@@ -21,10 +19,9 @@ import java.util.ArrayList;
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder>{
 
     private static final String TAG = "olneoo";
-
     private  ClickListener onItemClickListener;
-
     private ArrayList<BoardRabbit> list = new ArrayList<>();
+    private OnItemClickListener onItemClickListenerr;
 
     public BoardAdapter(ClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
@@ -48,13 +45,17 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder>{
         return 3;
     }
 
+    public void setOnItemClickListener(ClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     public void addRabbitToBoard(ArrayList<BoardRabbit> list) {
         this.list = list;
     }
 
 
     public  class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView imageView;
+        private LottieAnimationView lt;
         private TextView textTitle;
         private TextView textDesc;
         private Button btnStart;
@@ -67,13 +68,13 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder>{
 
             textTitle = itemView.findViewById(R.id.textTitle);
             textDesc = itemView.findViewById(R.id.textDesc);
-            imageView = itemView.findViewById(R.id.imageView);
+            lt = itemView.findViewById(R.id.imageView);
 
             btnStart = itemView.findViewById(R.id.btnStart);
             btnStart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onClick();
+                    onItemClickListener.onClick(getAdapterPosition());
                 }
             });
         }
@@ -88,17 +89,15 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder>{
         if (position == 2){
             btnStart.setVisibility(View.VISIBLE);
         }
-
         BoardRabbit br = list.get(position);
         textTitle.setText(br.getName());
         textDesc.setText(br.getDesc());
-        imageView.setImageResource(br.getImageResourceId());
-
+        lt.setAnimation(br.getImageResourceId());
     }
 }
 
     interface ClickListener{
-        void onClick();
+        void onClick(int position);
     }
 }
 

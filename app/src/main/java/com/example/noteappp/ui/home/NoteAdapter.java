@@ -1,7 +1,5 @@
 package com.example.noteappp.ui.home;
 
-import android.telephony.IccOpenLogicalChannelResponse;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +13,15 @@ import com.example.noteappp.OnItemClickListener;
 import com.example.noteappp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
-    private ArrayList<Note> list = new ArrayList<>();
+    private List<Note> list = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
+    public NoteAdapter(){
+    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -45,18 +46,35 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     public void addItem(Note note) {
         list.add(0, note);
-        notifyItemInserted(0);
-    }
-
-    public void addList(ArrayList<Note> list) {
-        this.list.addAll(list);
         notifyDataSetChanged();
     }
+
+//    public void addList(ArrayList<Note> list) {
+//        this.list.clear();
+//        this.list.addAll(list);
+//        notifyDataSetChanged();
+//    }
 
     public void remove( int position) {
-        list.remove(position);
+        this.list.remove(position);
         notifyDataSetChanged();
     }
+
+    public void setList(List<Note> noteList) {
+        this.list.clear();
+        this.list.addAll(noteList);
+        notifyDataSetChanged();
+    }
+
+    public Note getItem(int position) {
+        return list.get(position);
+     }
+
+    public void setItem(Note note, int temp) {
+        this.list.set(temp, note);
+        notifyItemInserted(temp);
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -69,7 +87,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    onItemClickListener.onClick(getAdapterPosition());
                 }
             });
 
@@ -84,10 +102,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         }
 
         public void bind(Note note) {
-            textTitle.setText(note.getTitles());
-
+            textTitle.setText(note.getTitles()+"\n" + note.getDate());
 
         }
 
     }
+
 }

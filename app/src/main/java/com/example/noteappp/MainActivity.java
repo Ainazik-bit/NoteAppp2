@@ -56,12 +56,16 @@ public class MainActivity extends AppCompatActivity {
             }else {
                 navView.setVisibility(View.GONE);
             }
+
+            if (destination.getId() == R.id.boardFragment) {
+                getSupportActionBar().hide();
+            }else{
+                getSupportActionBar().show();
+            }
             }
 
         });
     }
-
-
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();

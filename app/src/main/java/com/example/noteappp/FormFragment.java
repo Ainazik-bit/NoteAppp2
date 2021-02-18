@@ -16,8 +16,12 @@ import android.widget.EditText;
 import com.example.noteappp.Models.Note;
 import com.google.android.material.behavior.SwipeDismissBehavior;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class FormFragment extends Fragment {
 
+    private Note note;
     private EditText editText;
 
     @Override
@@ -27,7 +31,12 @@ public class FormFragment extends Fragment {
     }
 
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle saveInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle saveInstanceState) {
+
+        //==========================we are receiving note from here=================================================
+
+
         editText = getView().findViewById(R.id.edit_text);
         getView().findViewById(R.id.btnSave).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,14 +44,34 @@ public class FormFragment extends Fragment {
                 save();
             }
         });
+
+        note = (Note) requireArguments().getSerializable("note");
+        if (note != null) editText.setText(note.getTitles());
     }
 
-
     private void save() {
+        String date = DateFormat.getDateTimeInstance().format(new Date());
         String text = editText.getText().toString().trim();
-        Note note = new Note(text);
+        if(note == null){
+
+            note = new Note(text, date);
+            App.getAppDataBase().noteDao().insert(note);
+
+        } else {
+
+            note.setTitles(text);
+            App.getAppDataBase().noteDao().update(note);
+
+        }
+
         Bundle bundle = new Bundle();
         bundle.putSerializable("note", note);
         getParentFragmentManager().setFragmentResult("rk_form", bundle);
-        ((MainActivity) requireActivity()).closeFragment();
-    }}
+        close();
+    }
+
+    private void close() {
+        NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment);
+        navController.navigateUp();
+    }
+}
