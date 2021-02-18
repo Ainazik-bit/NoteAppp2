@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment {
     private Button sortAlphabet;
     private Button sortData;
 
+    private Boolean haha = true;
     private Boolean sortedByName = true;
     private Boolean sortedByDate = true;
 
